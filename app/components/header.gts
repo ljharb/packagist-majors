@@ -8,7 +8,7 @@ import { Arrow } from './icons/fa/external-link';
 export const Header = <template>
   <header>
     <div>
-      <ExternalLink class="github" href="https://github.com/NullVoxPopuli/package-majors">
+      <ExternalLink class="github" href="https://github.com/ljharb/packagist-majors">
         <img alt="" src="/images/github-logo.png" />
         GitHub
         <Arrow />
