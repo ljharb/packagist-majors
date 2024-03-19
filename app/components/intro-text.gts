@@ -16,6 +16,11 @@ export const IntroText = <template>
       Reveal problems users are having with upgrading to the next major.
       <br />
       Search for a package to see if its ecosystem has an upgrading problem.
+      <br />
+      <br />
+      <span>Shamelessly forked from
+        <a href="https://majors.nullvoxpopuli.com/">majors.nullvoxpopuli.com</a></span>
+      <br />
 
       <span>
         <button type="button" {{on "click" hide}}>Hide this</button>

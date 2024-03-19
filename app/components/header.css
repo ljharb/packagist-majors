@@ -25,6 +25,7 @@ a.github {
   display: grid;
   grid-auto-flow: column;
   gap: 0.5rem;
+  float: left;
 }
 
 a.github:hover {
