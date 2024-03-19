@@ -2,7 +2,7 @@ import { on } from '@ember/modifier';
 
 import { cell } from 'ember-resources';
 
-const key = 'majors_nullvoxpopuli__hide_prompt';
+const key = 'packagist_majors_nullvoxpopuli__hide_prompt';
 const showPrompt = cell(localStorage.getItem(key) !== 'true');
 
 function hide() {
