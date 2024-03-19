@@ -5,7 +5,7 @@ import type RouterService from '@ember/routing/router-service';
 type Transition = ReturnType<RouterService['transitionTo']>;
 
 function urlFor(packageName: string) {
-  return `https://api.npmjs.org/versions/${encodeURIComponent(packageName)}/last-week`;
+  return `https://packagist.org/packages/${packageName}/downloads.json`;
 }
 
 const CACHE = new Map();
@@ -15,7 +15,18 @@ async function getStats(packageName: string) {
     return CACHE.get(packageName);
   }
 
-  let result = await fetch(urlFor(packageName)).then((response) => response.json());
+  let { package: phpResult } = await fetch(urlFor(packageName)).then((response) => response.json());
+
+  if (!phpResult) {
+    throw new Error(`Package not found: ${packageName}`);
+  }
+
+  const result = {
+    package: phpResult.name,
+    downloads: Object.fromEntries(
+      Object.entries(phpResult.downloads.versions as { [k: string]: { monthly: number, daily: number, total: number } })
+    ),
+  };
 
   CACHE.set(packageName, result);
 
@@ -47,6 +58,9 @@ export default class Query extends Route {
       refreshModel: false,
     },
     old: {
+      refreshModel: false,
+    },
+    granularity: {
       refreshModel: false,
     },
   };

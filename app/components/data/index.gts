@@ -70,7 +70,19 @@ export class Data extends Component<{
     return qps?.['old'] === 'on';
   }
 
+  get granularity(): 'monthly' | 'daily' | 'total' {
+    let qps = this.router.currentRoute?.queryParams;
+
+    const { granularity = 'monthly' } = qps;
+
+    if (granularity === 'monthly' || granularity === 'daily' || granularity === 'total') {
+      return granularity;
+    }
+
+    return 'monthly';
+  }
+
   get formattedData() {
-    return format(this.args.data.stats, this.groupBy, this.showOld);
+    return format(this.args.data.stats, this.groupBy, this.showOld, this.granularity);
   }
 }

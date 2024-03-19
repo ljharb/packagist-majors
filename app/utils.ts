@@ -24,6 +24,7 @@ export function versionComparator(a: number | string, b: number | string) {
  */
 export function filterDownloads(
   downloads: DownloadsResponse['downloads'],
+  granularity: 'monthly' | 'daily' | 'total',
   minDownloads: number
 ): DownloadsResponse['downloads'] {
   // We must copy the object, becaues it's cached and long lived, se we can't mutate it.
@@ -33,7 +34,9 @@ export function filterDownloads(
 
   for (let version of sortedVersions) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    let downloadCount = downloads[version]!;
+
+    const downloadVersions = downloads[version];
+    let downloadCount = downloadVersions?.[granularity] || 0;
 
     if (downloadCount < minDownloads) {
       delete copy[version];
@@ -45,22 +48,22 @@ export function filterDownloads(
   return copy;
 }
 
-export function getTotalDownloads(downloads: DownloadsResponse['downloads']): number {
+export function getTotalDownloads(downloads: DownloadsResponse['downloads'], granularity: 'monthly' | 'daily' | 'total'): number {
   let total = 0;
 
-  for (let [, downloadCount] of Object.entries(downloads)) {
+  for (let [, { [granularity]: downloadCount }] of Object.entries(downloads)) {
     total += downloadCount;
   }
 
   return total;
 }
 
-export function groupByMajor(downloads: DownloadsResponse['downloads']) {
+export function groupByMajor(downloads: DownloadsResponse['downloads'], granularity: 'monthly' | 'daily' | 'total') {
   let groups: Record<number, number> = {};
 
-  for (let [version, downloadCount] of Object.entries(downloads)) {
+  for (let [version, { [granularity]: downloadCount }] of Object.entries(downloads)) {
     if (!isValid(version)) {
-      console.error(`${version} is invalid and will be omitted from the dataset.`);
+      console.error(`${version} is invalid (or a tag) and will be omitted from the dataset.`);
 
       continue;
     }
@@ -76,12 +79,12 @@ export function groupByMajor(downloads: DownloadsResponse['downloads']) {
   });
 }
 
-export function groupByMinor(downloads: DownloadsResponse['downloads']): Grouped {
+export function groupByMinor(downloads: DownloadsResponse['downloads'], granularity: 'monthly' | 'daily' | 'total'): Grouped {
   let groups: Record<string, number> = {};
 
-  for (let [version, downloadCount] of Object.entries(downloads)) {
+  for (let [version, { [granularity]: downloadCount }] of Object.entries(downloads)) {
     if (!isValid(version)) {
-      console.error(`${version} is invalid and will be omitted from the dataset.`);
+      console.error(`${version} is invalid (or a tag) and will be omitted from the dataset.`);
 
       continue;
     }

@@ -1,7 +1,11 @@
 export interface DownloadsResponse {
   package: string;
   downloads: {
-    [version: string]: number;
+    [version: string]: {
+      monthly: number;
+      daily: number;
+      total: number;
+    };
   };
 }
 
