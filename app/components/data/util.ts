@@ -13,7 +13,12 @@ export interface FormattedData {
   downloads: Grouped;
 }
 
-export function format(data: DownloadsResponse[], groupBy: 'minors' | 'majors', showOld: boolean, granularity: 'monthly' | 'daily' | 'total' = 'monthly') {
+export function format(
+  data: DownloadsResponse[],
+  groupBy: 'minors' | 'majors',
+  showOld: boolean,
+  granularity: 'monthly' | 'daily' | 'total' = 'monthly'
+) {
   const grouped = data.map((datum) => {
     let dls = datum.downloads;
 
@@ -24,7 +29,8 @@ export function format(data: DownloadsResponse[], groupBy: 'minors' | 'majors', 
       dls = filterDownloads(dls, granularity, onePercent);
     }
 
-    let downloads = groupBy === 'minors' ? groupByMinor(dls, granularity) : groupByMajor(dls, granularity);
+    let downloads =
+      groupBy === 'minors' ? groupByMinor(dls, granularity) : groupByMajor(dls, granularity);
 
     return {
       name: datum.package,

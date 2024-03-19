@@ -5,11 +5,11 @@ import { on } from '@ember/modifier';
 
 import type { TOC } from '@ember/component/template-only';
 
-function isChecked(value, currentValue) {
+function isChecked(value: string, currentValue: string) {
   return value === currentValue;
 }
 
-function getLabelClass(value, currentValue) {
+function getLabelClass(value: string, currentValue: string) {
   return value === currentValue ? 'checked' : '';
 }
 
@@ -24,27 +24,45 @@ function inputHandler(event: Event) {
 export const Granularity: TOC<{
   Element: HTMLInputElement;
   Args: {
-    checked?: 'monthly' | 'daily' | 'total';
+    checked: 'monthly' | 'daily' | 'total';
   };
 }> = <template>
   <fieldset class="fun-radios">
-    <div class={{getLabelClass 'monthly' @checked}}>
+    <div class={{getLabelClass "monthly" @checked}}>
       <label>
-        <input {{on 'input' inputHandler}} type="radio" name="granularity" value="monthly" checked={{isChecked 'monthly' @checked}} />
+        <input
+          {{on "input" inputHandler}}
+          type="radio"
+          name="granularity"
+          value="monthly"
+          checked={{isChecked "monthly" @checked}}
+        />
         <div>
           <span>Monthly</span>
         </div>
       </label>
     </div>
-    <div class={{getLabelClass 'daily' @checked}}>
+    <div class={{getLabelClass "daily" @checked}}>
       <label>
-        <input {{on 'input' inputHandler}} type="radio" name="granularity" value="daily" checked={{isChecked 'daily' @checked}} />
+        <input
+          {{on "input" inputHandler}}
+          type="radio"
+          name="granularity"
+          value="daily"
+          checked={{isChecked "daily" @checked}}
+        />
         <span>Daily</span>
       </label>
     </div>
-    <div class={{getLabelClass 'total' @checked}}>
+    <div class={{getLabelClass "total" @checked}}>
       <label>
-        <input {{on 'input' inputHandler}} type="radio" name="granularity" value="total" checked={{isChecked 'total' @checked}} />
+        <input
+          {{on "input" inputHandler}}
+          type="radio"
+          name="granularity"
+          value="total"
+          checked={{isChecked "total" @checked}}
+        />
         <span>Total</span>
       </label>
     </div>

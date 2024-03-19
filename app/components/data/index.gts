@@ -73,7 +73,7 @@ export class Data extends Component<{
   get granularity(): 'monthly' | 'daily' | 'total' {
     let qps = this.router.currentRoute?.queryParams;
 
-    const { granularity = 'monthly' } = qps;
+    const granularity = qps?.['granularity'] ?? 'monthly';
 
     if (granularity === 'monthly' || granularity === 'daily' || granularity === 'total') {
       return granularity;

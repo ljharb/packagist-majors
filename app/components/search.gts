@@ -25,11 +25,18 @@ function handleSubmit(onChange: (data: SearchFormData) => void, data: unknown, e
   onChange(data as SearchFormData);
 }
 
+interface QueryParams {
+  packages: string[];
+  minors: 'on' | undefined;
+  old: 'on' | undefined;
+  granularity: 'monthly' | 'daily' | 'total';
+}
+
 interface SearchFormData {
   packageName: string;
   showMinors?: 'on';
   showOld?: 'on';
-  granularity?: 'monthly' | 'daily' | 'total'
+  granularity?: 'monthly' | 'daily' | 'total';
 }
 
 export class Search extends Component<{
@@ -48,7 +55,7 @@ export class Search extends Component<{
   @service declare router: RouterService;
 
   get last() {
-    let qps = this.router.currentRoute?.queryParams;
+    let qps = this.router.currentRoute?.queryParams as unknown as QueryParams | undefined;
     let minors = qps?.['minors'];
     let packages = qps?.['packages'];
     let old = qps?.['old'];
@@ -58,7 +65,7 @@ export class Search extends Component<{
       packages: packages ? `${packages}` : '',
       minors: minors ? `${minors}` : undefined,
       old: old ? `${old}` : undefined,
-      granularity
+      granularity: granularity,
     };
   }
 
@@ -70,7 +77,7 @@ export class Search extends Component<{
         packages,
         minors,
         old,
-        granularity
+        granularity,
       },
     });
   };

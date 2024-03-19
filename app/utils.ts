@@ -48,7 +48,10 @@ export function filterDownloads(
   return copy;
 }
 
-export function getTotalDownloads(downloads: DownloadsResponse['downloads'], granularity: 'monthly' | 'daily' | 'total'): number {
+export function getTotalDownloads(
+  downloads: DownloadsResponse['downloads'],
+  granularity: 'monthly' | 'daily' | 'total'
+): number {
   let total = 0;
 
   for (let [, { [granularity]: downloadCount }] of Object.entries(downloads)) {
@@ -58,7 +61,10 @@ export function getTotalDownloads(downloads: DownloadsResponse['downloads'], gra
   return total;
 }
 
-export function groupByMajor(downloads: DownloadsResponse['downloads'], granularity: 'monthly' | 'daily' | 'total') {
+export function groupByMajor(
+  downloads: DownloadsResponse['downloads'],
+  granularity: 'monthly' | 'daily' | 'total'
+) {
   let groups: Record<number, number> = {};
 
   for (let [version, { [granularity]: downloadCount }] of Object.entries(downloads)) {
@@ -79,7 +85,10 @@ export function groupByMajor(downloads: DownloadsResponse['downloads'], granular
   });
 }
 
-export function groupByMinor(downloads: DownloadsResponse['downloads'], granularity: 'monthly' | 'daily' | 'total'): Grouped {
+export function groupByMinor(
+  downloads: DownloadsResponse['downloads'],
+  granularity: 'monthly' | 'daily' | 'total'
+): Grouped {
   let groups: Record<string, number> = {};
 
   for (let [version, { [granularity]: downloadCount }] of Object.entries(downloads)) {

@@ -24,7 +24,11 @@ async function getStats(packageName: string) {
   const result = {
     package: phpResult.name,
     downloads: Object.fromEntries(
-      Object.entries(phpResult.downloads.versions as { [k: string]: { monthly: number, daily: number, total: number } })
+      Object.entries(
+        phpResult.downloads.versions as {
+          [k: string]: { monthly: number; daily: number; total: number };
+        }
+      )
     ),
   };
 
