@@ -7,6 +7,6 @@ export default class Query extends Route {
   @service declare router: RouterService;
 
   async beforeModel() {
-    this.router.replaceWith('query', { queryParams: { packages: '@angular/core' } });
+    this.router.replaceWith('query', { queryParams: { packages: 'laravel/laravel' } });
   }
 }
