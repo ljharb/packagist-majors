@@ -1,0 +1,50 @@
+fieldset.fun-radios {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  max-width: 24rem;
+  border: 0;
+}
+
+.fun-radios > div {
+  display: grid;
+  column-gap: 0.5rem;
+  width: 90px;
+  grid-template-rows: max-content;
+  border-radius: 60px;
+  color: var(--page-font);
+  background-color: lightgray;
+}
+
+.fun-radios > div.checked {
+  color: green;
+}
+
+.fun-radios input[type="radio"] {
+  left: -9999px;
+  position: absolute;
+  transform: translateX(1px) translateY(1px);
+}
+
+.fun-radios label {
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.fun-radios label span {
+  font-weight: bold;
+}
+
+.fun-radios label div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 
 import { Form } from 'ember-primitives';
 
+import { Granularity } from './granularity';
 import { NameInput } from './name-input';
 import { ShowMinors } from './show-minors';
 import { ShowOld } from './show-old';
@@ -28,6 +29,7 @@ interface SearchFormData {
   packageName: string;
   showMinors?: 'on';
   showOld?: 'on';
+  granularity?: 'monthly' | 'daily' | 'total'
 }
 
 export class Search extends Component<{
@@ -39,6 +41,7 @@ export class Search extends Component<{
 
       <ShowMinors checked={{this.last.minors}} />
       <ShowOld checked={{this.last.old}} />
+      <Granularity @checked={{this.last.granularity}} />
     </Form>
   </template>
 
@@ -49,22 +52,25 @@ export class Search extends Component<{
     let minors = qps?.['minors'];
     let packages = qps?.['packages'];
     let old = qps?.['old'];
+    const { granularity = 'monthly' } = qps ?? {};
 
     return {
       packages: packages ? `${packages}` : '',
       minors: minors ? `${minors}` : undefined,
       old: old ? `${old}` : undefined,
+      granularity
     };
   }
 
   updateSearch = (data: SearchFormData) => {
-    let { packageName: packages, showMinors: minors, showOld: old } = data;
+    let { packageName: packages, showMinors: minors, showOld: old, granularity } = data;
 
     this.router.transitionTo('query', {
       queryParams: {
         packages,
         minors,
         old,
+        granularity
       },
     });
   };
